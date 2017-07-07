@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- text size -->
+    <dimen name="f0">10sp</dimen>
+    <dimen name="f1">11sp</dimen>
+    <dimen name="f2">12sp</dimen>
+    <dimen name="f3">13sp</dimen>
+    <dimen name="f4">14sp</dimen>
+    <dimen name="f5">15sp</dimen>
+    <dimen name="f6">16sp</dimen>
+    <dimen name="f7">17sp</dimen>
+    <dimen name="f8">18sp</dimen>
+    <dimen name="f9">19sp</dimen>
+    <dimen name="f10">20sp</dimen>
+    <dimen name="f11">21sp</dimen>
+    <dimen name="f12">22sp</dimen>
+    <dimen name="f13">23sp</dimen>
+    <dimen name="f14">24sp</dimen>
+    <dimen name="f15">25sp</dimen>
+
+    <!--Common margin and padding-->
+    <dimen name="m1">1dp</dimen>
+    <dimen name="m2">2dp</dimen>
+    <dimen name="m3">3dp</dimen>
+    <dimen name="m4">4dp</dimen>
+    <dimen name="m5">5dp</dimen>
+    <dimen name="m6">6dp</dimen>
+    <dimen name="m7">7dp</dimen>
+    <dimen name="m8">8dp</dimen>
+    <dimen name="m9">9dp</dimen>
+    <dimen name="m10">10dp</dimen>
+    <dimen name="m12">12dp</dimen>
+    <dimen name="m15">15dp</dimen>
+    <dimen name="m16">16dp</dimen>
+    <dimen name="m18">18dp</dimen>
+    <dimen name="m20">20dp</dimen>
+
+    <!--corners-->
+    <dimen name="r2">2dp</dimen>
+    <dimen name="r4">4dp</dimen>
+    <dimen name="r6">6dp</dimen>
+    <dimen name="r8">8dp</dimen>
+    <dimen name="r10">10dp</dimen>
+
+    <!--分割线-->
+    <dimen name="common_divider">1px</dimen>
+
+</resources>

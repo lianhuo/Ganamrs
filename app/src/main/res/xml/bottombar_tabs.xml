@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_home"
+        icon="@drawable/ic_home_black_24dp"
+        title="@string/title_home" />
+    <tab
+        id="@+id/tab_dashboard"
+        icon="@drawable/ic_dashboard_black_24dp"
+        title="@string/title_dashboard" />
+
+    <tab
+        id="@+id/tab_mycenter"
+        icon="@mipmap/ic_friends"
+        title="@string/title_mecenter" />
+
+
+</tabs>

@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.zhy.ganamrs"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+//        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'jsr305'
+    })
+    //support
+    compile(rootProject.ext.dependencies["cardview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    compile rootProject.ext.dependencies["progressmanager"]
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'butterknife-annotations'
+    }
+    compile rootProject.ext.dependencies["paginate"]
+    //test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
+
+    compile rootProject.ext.dependencies["androideventbus"]//eventbus
+    compile rootProject.ext.dependencies["arouter"]
+
+    compile 'com.roughike:bottom-bar:2.3.1' //底部导航
+    compile 'me.jessyan:arms:2.1.0' //使用Rxjava2
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+}

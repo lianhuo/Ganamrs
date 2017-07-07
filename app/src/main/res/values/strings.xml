@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ganamrs</string>
+
+
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">福利</string>
+    <string name="title_mecenter">收藏</string>
+</resources>

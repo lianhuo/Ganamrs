@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/m16"
+    android:layout_marginRight="@dimen/m16"
+    android:layout_marginTop="@dimen/m12"
+    android:background="@drawable/shape_list_item_bg"
+    app:cardCornerRadius="@dimen/m8"
+    app:cardElevation="@dimen/m10">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/m15">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/m5"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:padding="10dp"
+                android:textColor="@color/C5"
+                android:textSize="@dimen/f6"
+                tools:text="desc" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_divider"
+            android:layout_margin="@dimen/m10"
+            android:background="@color/C1" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/C12"
+                tools:text="yu" />
+
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/C12"
+                tools:text="2017-6-20" />
+        </FrameLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
