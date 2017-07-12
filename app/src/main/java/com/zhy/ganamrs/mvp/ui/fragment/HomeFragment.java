@@ -58,20 +58,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-//        if (mFragments == null) {
-//            mFragments = new ArrayList<>();
-//            mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
-//            mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
-//            mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
-//        }
-//        mainPager.setOffscreenPageLimit(mFragments.size());
-//        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
-//        tabs.setupWithViewPager(mainPager);
-    }
-
-    @Override
-    protected void onFragmentFirstVisible() {
-        //去服务器下载数据
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
@@ -81,6 +67,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mainPager.setOffscreenPageLimit(mFragments.size());
         mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
         tabs.setupWithViewPager(mainPager);
+    }
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        //去服务器下载数据
     }
 
     /**

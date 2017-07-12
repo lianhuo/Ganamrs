@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhy.ganamrs">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -26,7 +25,6 @@
             </intent-filter>
         </activity>
 
-
         <!-- glide配置 -->
         <meta-data
             android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
@@ -36,6 +34,7 @@
             android:name="com.zhy.ganamrs.app.GlobalConfiguration"
             android:value="ConfigModule" />
 
+        <activity android:name=".mvp.ui.activity.DetailActivity"></activity>
     </application>
 
 </manifest>

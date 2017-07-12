@@ -24,6 +24,7 @@ import com.zhy.ganamrs.di.module.CategoryModule;
 import com.zhy.ganamrs.mvp.contract.CategoryContract;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
 import com.zhy.ganamrs.mvp.presenter.CategoryPresenter;
+import com.zhy.ganamrs.mvp.ui.activity.DetailActivity;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -147,7 +148,10 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((View view, int viewType, Object data, int position) -> {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) data;
-            UiUtils.snackbarText(bean.desc);
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.putExtra("a",bean.desc);
+            launchActivity(intent);
+//            UiUtils.snackbarText(bean.desc);
         });
         initPaginate();
     }
