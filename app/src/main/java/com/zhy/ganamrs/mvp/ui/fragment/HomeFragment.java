@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.zhy.ganamrs.R;
+import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.app.utils.CategoryType;
 import com.zhy.ganamrs.di.component.DaggerHomeComponent;
 import com.zhy.ganamrs.di.module.HomeModule;
@@ -58,6 +58,20 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
+//        if (mFragments == null) {
+//            mFragments = new ArrayList<>();
+//            mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
+//            mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
+//            mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
+//        }
+//        mainPager.setOffscreenPageLimit(mFragments.size());
+//        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
+//        tabs.setupWithViewPager(mainPager);
+    }
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        //去服务器下载数据
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));

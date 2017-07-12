@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.jess.arms.base.BaseFragment;
+
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
 import com.zhy.ganamrs.R;
 
+import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerCategoryComponent;
 import com.zhy.ganamrs.di.module.CategoryModule;
 import com.zhy.ganamrs.mvp.contract.CategoryContract;
@@ -71,9 +72,13 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         type = getArguments().getString("type");
         mSwipeRefreshLayout.setOnRefreshListener(this);
         UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+//        mPresenter.requestData(type,true);
+    }
+    @Override
+    protected void onFragmentFirstVisible() {
+        //去服务器下载数据
         mPresenter.requestData(type,true);
     }
-
 
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
@@ -179,5 +184,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         DefaultAdapter.releaseAllHolder(mRecyclerView);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         this.mPaginate = null;
     }
+
 
 }

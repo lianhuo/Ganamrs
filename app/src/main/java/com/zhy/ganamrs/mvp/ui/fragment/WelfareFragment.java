@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.zhy.ganamrs.R;
+import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerWelfareComponent;
 import com.zhy.ganamrs.di.module.WelfareModule;
 import com.zhy.ganamrs.mvp.contract.WelfareContract;
@@ -65,14 +65,17 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mPresenter.requestData(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
     }
 
-
+    @Override
+    protected void onFragmentFirstVisible() {
+        //去服务器下载数据
+        mPresenter.requestData(true);
+    }
 
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
