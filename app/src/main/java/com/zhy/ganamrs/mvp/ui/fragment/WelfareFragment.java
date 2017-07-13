@@ -7,9 +7,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.di.component.AppComponent;
@@ -69,6 +71,15 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
+
+        mAdapter = new WelfareAdapter(null);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
+        TextView textView = new TextView(getContext());
+        textView.setText("没有更多内容了");
+        textView.setGravity(Gravity.CENTER);
+        mAdapter.setEmptyView(textView);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -141,15 +152,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     @Override
     public void setNewData(List<GankEntity.ResultsBean> mData) {
-        if (mAdapter == null){
-            mAdapter = new WelfareAdapter(mData);
-            mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-            mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
-            mRecyclerView.setAdapter(mAdapter);
-        }else {
-            mAdapter.setNewData(mData);
-        }
-
+        mAdapter.setNewData(mData);
     }
 
     @Override

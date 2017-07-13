@@ -8,23 +8,32 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.jess.arms.base.App;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
+import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.di.component.DaggerDetailComponent;
 import com.zhy.ganamrs.di.module.DetailModule;
 import com.zhy.ganamrs.mvp.contract.DetailContract;
+import com.zhy.ganamrs.mvp.model.entity.GankEntity;
 import com.zhy.ganamrs.mvp.presenter.DetailPresenter;
 
 import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.zhy.ganamrs.app.ARouterPaths.MAIN_DETAIL;
+import static com.zhy.ganamrs.app.EventBusTags.EXTRA_DETAIL;
 
-
+@Route(path = MAIN_DETAIL)
 public class DetailActivity extends BaseActivity<DetailPresenter> implements DetailContract.View {
 
 
@@ -36,6 +45,7 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
     WebView webview;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    private GankEntity.ResultsBean entity;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -54,12 +64,14 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        entity = (GankEntity.ResultsBean) getIntent()
+                .getExtras()
+                .getSerializable(EXTRA_DETAIL);
+        mPresenter.getGirl();
         if (toolbar != null) {
             if (this instanceof AppCompatActivity) {
                 setSupportActionBar(toolbar);
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                toolbar.setTitle(myInfoListBeen.title);
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     this.setActionBar((android.widget.Toolbar) this.findViewById(R.id.toolbar));
@@ -67,8 +79,26 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
                 }
             }
         }
+        initWebView();
 
+    }
 
+    private void initWebView() {
+        WebSettings settings = webview.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setSupportZoom(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
+        webview.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return true;
+            }
+        });
+
+        webview.loadUrl(entity.url);
     }
 
     @Override
@@ -109,4 +139,22 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (webview.canGoBack()) {
+            webview.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void setData(String url) {
+        ((App)getApplicationContext()).getAppComponent().imageLoader().loadImage(this,
+                GlideImageConfig
+                        .builder()
+                        .url(url)
+                        .imageView(imageView)
+                        .build());
+    }
 }

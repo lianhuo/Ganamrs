@@ -10,28 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
 import com.zhy.ganamrs.R;
-
 import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerCategoryComponent;
 import com.zhy.ganamrs.di.module.CategoryModule;
 import com.zhy.ganamrs.mvp.contract.CategoryContract;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
 import com.zhy.ganamrs.mvp.presenter.CategoryPresenter;
-import com.zhy.ganamrs.mvp.ui.activity.DetailActivity;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
-
+import static com.zhy.ganamrs.app.ARouterPaths.MAIN_DETAIL;
+import static com.zhy.ganamrs.app.EventBusTags.EXTRA_DETAIL;
 
 public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View , SwipeRefreshLayout.OnRefreshListener{
 
@@ -73,7 +71,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         type = getArguments().getString("type");
         mSwipeRefreshLayout.setOnRefreshListener(this);
         UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-//        mPresenter.requestData(type,true);
     }
     @Override
     protected void onFragmentFirstVisible() {
@@ -148,10 +145,9 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((View view, int viewType, Object data, int position) -> {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) data;
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra("a",bean.desc);
-            launchActivity(intent);
-//            UiUtils.snackbarText(bean.desc);
+            ARouter.getInstance().build(MAIN_DETAIL)
+                    .withSerializable(EXTRA_DETAIL, bean)
+                    .navigation();
         });
         initPaginate();
     }

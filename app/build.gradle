@@ -19,6 +19,15 @@ android {
         versionName rootProject.ext.android["versionName"]
 //        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // dex突破65535的限制
+        multiDexEnabled true
+        //alibaba ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     buildTypes {
 
@@ -74,6 +83,7 @@ dependencies {
 
     compile rootProject.ext.dependencies["androideventbus"]//eventbus
     compile rootProject.ext.dependencies["arouter"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
 
     compile 'com.roughike:bottom-bar:2.3.1' //底部导航
     compile 'me.jessyan:arms:2.1.0' //使用Rxjava2
