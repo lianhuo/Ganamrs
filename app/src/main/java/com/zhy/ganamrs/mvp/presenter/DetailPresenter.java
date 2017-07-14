@@ -61,4 +61,8 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
                     }
                 });
     }
+
+    public void getQuery(String id){
+        mRootView.onFavoriteChange(mModel.queryById(id).size() > 0);
+    }
 }

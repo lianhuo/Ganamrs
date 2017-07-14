@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -53,6 +54,13 @@ android {
         disable "ResourceType"
         abortOnError false
     }
+
+
+    greendao {
+        schemaVersion 1//数据库版本号
+        daoPackage 'com.zhy.ganamrs.app.greendao'//设置DaoMaster、DaoSession、Dao包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    }
 }
 
 dependencies {
@@ -88,4 +96,6 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.3.1' //底部导航
     compile 'me.jessyan:arms:2.1.0' //使用Rxjava2
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+
+    compile 'org.greenrobot:greendao:3.2.2' // greenDao
 }

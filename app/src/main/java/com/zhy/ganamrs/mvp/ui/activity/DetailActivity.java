@@ -1,6 +1,7 @@
 package com.zhy.ganamrs.mvp.ui.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
     @BindView(R.id.fab)
     FloatingActionButton fab;
     private GankEntity.ResultsBean entity;
+    private boolean isFavorite;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -68,6 +70,7 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
                 .getExtras()
                 .getSerializable(EXTRA_DETAIL);
         mPresenter.getGirl();
+        mPresenter.getQuery(entity._id);
         if (toolbar != null) {
             if (this instanceof AppCompatActivity) {
                 setSupportActionBar(toolbar);
@@ -79,10 +82,30 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
                 }
             }
         }
+
+        // TODO: 2017/7/13 添加到收藏夹
+        fab.setOnClickListener(v -> {
+            if (isFavorite) {
+                UiUtils.makeText(this,"已移除收藏夹");
+            } else {
+                UiUtils.makeText(this,"已添加到收藏夹");
+            }
+        });
+
         initWebView();
 
     }
 
+    @Override
+    public void onFavoriteChange(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        if (isFavorite){
+            fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+        }else {
+            fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.C4)));
+        }
+
+    }
     private void initWebView() {
         WebSettings settings = webview.getSettings();
         settings.setUseWideViewPort(true);
@@ -157,4 +180,6 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
                         .imageView(imageView)
                         .build());
     }
+
+
 }

@@ -3,6 +3,7 @@ apply from: "config.gradle" //这里表示引用config.gradle文件
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
@@ -11,6 +12,9 @@ buildscript {
         // in the individual module build.gradle files
         //lambda
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+
+        //greendDao
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
     }
 }
 

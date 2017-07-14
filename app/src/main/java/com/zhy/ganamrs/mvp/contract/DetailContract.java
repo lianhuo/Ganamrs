@@ -2,7 +2,12 @@ package com.zhy.ganamrs.mvp.contract;
 
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
+import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
+
+import org.greenrobot.greendao.rx.RxDao;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -12,10 +17,13 @@ public interface DetailContract {
     interface View extends IView {
 
         void setData(String url);
+        void onFavoriteChange(boolean isFavorite);
     }
 
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
     interface Model extends IModel {
         Observable<GankEntity> getRandomGirl();
+        List<DaoGankEntity> queryById(String  id);
+        RxDao<DaoGankEntity, Void> addAndRemove(DaoGankEntity entity);
     }
 }
