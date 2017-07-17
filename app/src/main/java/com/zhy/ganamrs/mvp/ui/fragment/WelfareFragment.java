@@ -83,7 +83,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            showMessage("双击收藏图片");
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {

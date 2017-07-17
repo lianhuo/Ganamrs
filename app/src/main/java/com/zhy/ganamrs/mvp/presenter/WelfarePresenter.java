@@ -84,8 +84,7 @@ public class WelfarePresenter extends BasePresenter<WelfareContract.Model, Welfa
 
     public void addToFavorites(GankEntity.ResultsBean entity) {
         DaoGankEntity daoGankEntity = entityToDao(entity);
-        mModel.addGankEntity(daoGankEntity);
-        mRootView.showMessage("收藏成功");
+        mRootView.showMessage(mModel.addGankEntity(daoGankEntity));
     }
     private DaoGankEntity entityToDao(GankEntity.ResultsBean entity) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

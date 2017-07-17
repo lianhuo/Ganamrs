@@ -25,6 +25,6 @@ public interface WelfareContract {
     interface Model extends IModel {
         Observable<GankEntity> getRandomGirl();
 
-        void addGankEntity(DaoGankEntity daoGankEntity);
+        String addGankEntity(DaoGankEntity daoGankEntity);
     }
 }

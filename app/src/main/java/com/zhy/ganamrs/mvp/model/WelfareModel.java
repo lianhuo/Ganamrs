@@ -7,10 +7,13 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.zhy.ganamrs.app.GreenDaoHelper;
+import com.zhy.ganamrs.app.greendao.DaoGankEntityDao;
 import com.zhy.ganamrs.mvp.contract.WelfareContract;
 import com.zhy.ganamrs.mvp.model.api.service.CommonService;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -44,7 +47,16 @@ public class WelfareModel extends BaseModel implements WelfareContract.Model {
     }
 
     @Override
-    public void addGankEntity(DaoGankEntity daoGankEntity) {
-        GreenDaoHelper.getDaoSession().getDaoGankEntityDao().insert(daoGankEntity);
+    public String addGankEntity(DaoGankEntity daoGankEntity) {
+        List<DaoGankEntity> list = GreenDaoHelper.getDaoSession().getDaoGankEntityDao()
+                .queryBuilder()
+                .where(DaoGankEntityDao.Properties._id.eq(daoGankEntity._id))
+                .list();
+        if (list.size() > 0){
+            return "该图片已经收藏过了";
+        }else {
+            GreenDaoHelper.getDaoSession().getDaoGankEntityDao().insert(daoGankEntity);
+            return "收藏成功";
+        }
     }
 }
