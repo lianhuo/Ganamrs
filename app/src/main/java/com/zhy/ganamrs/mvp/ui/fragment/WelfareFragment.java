@@ -1,7 +1,12 @@
 package com.zhy.ganamrs.mvp.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +16,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -75,6 +82,14 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         mAdapter = new WelfareAdapter(null);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            showMessage("双击收藏图片");
+            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+            if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+                collectWelfare(adapter,view,position);
+            }
+        });
         TextView textView = new TextView(getContext());
         textView.setText("没有更多内容了");
         textView.setGravity(Gravity.CENTER);
@@ -82,6 +97,68 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void collectWelfare(BaseQuickAdapter adapter, View view, int position) {
+        animatePhotoLike(view);
+        GankEntity.ResultsBean entity = (GankEntity.ResultsBean) adapter.getItem(position);
+        mPresenter.addToFavorites(entity);
+    }
+    private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private void animatePhotoLike(View view) {
+//        View vBgLike = view.findViewById(R.id.vBgLike);
+        View ivLike = view.findViewById(R.id.ivLike);
+//        vBgLike.setVisibility(View.VISIBLE);
+        ivLike.setVisibility(View.VISIBLE);
+
+//        vBgLike.setScaleY(0.1f);
+//        vBgLike.setScaleX(0.1f);
+//        vBgLike.setAlpha(1f);
+        ivLike.setScaleY(0.1f);
+        ivLike.setScaleX(0.1f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+
+//        ObjectAnimator bgScaleYAnim = ObjectAnimator.ofFloat(vBgLike, "scaleY", 0.1f, 1f);
+//        bgScaleYAnim.setDuration(200);
+//        bgScaleYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+//        ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(vBgLike, "scaleX", 0.1f, 1f);
+//        bgScaleXAnim.setDuration(200);
+//        bgScaleXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+//        ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(vBgLike, "alpha", 1f, 0f);
+//        bgAlphaAnim.setDuration(200);
+//        bgAlphaAnim.setStartDelay(150);
+//        bgAlphaAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+        ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(ivLike, "scaleY", 0.1f, 1f);
+        imgScaleUpYAnim.setDuration(300);
+        imgScaleUpYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+        ObjectAnimator imgScaleUpXAnim = ObjectAnimator.ofFloat(ivLike, "scaleX", 0.1f, 1f);
+        imgScaleUpXAnim.setDuration(300);
+        imgScaleUpXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+        ObjectAnimator imgScaleDownYAnim = ObjectAnimator.ofFloat(ivLike, "scaleY", 1f, 0f);
+        imgScaleDownYAnim.setDuration(300);
+        imgScaleDownYAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+        ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(ivLike, "scaleX", 1f, 0f);
+        imgScaleDownXAnim.setDuration(300);
+        imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+//        animatorSet.playTogether(bgScaleYAnim, bgScaleXAnim, bgAlphaAnim, imgScaleUpYAnim, imgScaleUpXAnim);
+        animatorSet.playTogether(imgScaleUpYAnim, imgScaleUpXAnim);
+        animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
+
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+//                likeAnimationsMap.remove(holder);
+//                resetLikeAnimationState(holder);
+//                dispatchChangeFinishedIfAllAnimationsEnded(holder);
+            }
+        });
+        animatorSet.start();
+    }
+
+    private long[] mHits = new long[2];
     @Override
     protected void onFragmentFirstVisible() {
         //去服务器下载数据

@@ -8,11 +8,32 @@
     app:cardCornerRadius="@dimen/m8"
     app:cardElevation="@dimen/m10">
 
-    <ImageView
-        android:id="@+id/ivImage"
+    <FrameLayout
+        android:id="@+id/vImageRoot"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            />
+        <View
+            android:id="@+id/vBgLike"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_like_circle_background"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/ic_heart_outline_white"
+            android:visibility="invisible" />
+
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>
