@@ -87,8 +87,10 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
         fab.setOnClickListener(v -> {
             if (isFavorite) {
                 UiUtils.makeText(this,"已移除收藏夹");
+                mPresenter.removeByid(entity);
             } else {
                 UiUtils.makeText(this,"已添加到收藏夹");
+                mPresenter.addToFavorites(entity);
             }
         });
 

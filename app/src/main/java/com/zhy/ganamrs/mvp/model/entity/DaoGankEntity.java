@@ -1,10 +1,10 @@
 package com.zhy.ganamrs.mvp.model.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Administrator on 2017/7/4.
@@ -24,6 +24,7 @@ public class DaoGankEntity {
          * used : true
          * who : 代码家
          */
+
         public String _id;
         public String createdAt;
         public String desc;

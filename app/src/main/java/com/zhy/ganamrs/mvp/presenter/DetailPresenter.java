@@ -8,7 +8,11 @@ import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.zhy.ganamrs.app.utils.RxUtils;
 import com.zhy.ganamrs.mvp.contract.DetailContract;
+import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -26,6 +30,7 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
     private Application mApplication;
     private ImageLoader mImageLoader;
     private AppManager mAppManager;
+    private DaoGankEntity daoGankEntity;
 
     @Inject
     public DetailPresenter(DetailContract.Model model, DetailContract.View rootView
@@ -64,5 +69,37 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
 
     public void getQuery(String id){
         mRootView.onFavoriteChange(mModel.queryById(id).size() > 0);
+    }
+
+    public void removeByid(GankEntity.ResultsBean entity) {
+        DaoGankEntity daoGankEntity = entityToDao(entity);
+        mModel.removeByid(daoGankEntity._id);
+        mRootView.onFavoriteChange(false);
+    }
+
+    public void addToFavorites(GankEntity.ResultsBean entity) {
+        DaoGankEntity daoGankEntity = entityToDao(entity);
+        mModel.addGankEntity(daoGankEntity);
+        mRootView.onFavoriteChange(true);
+    }
+
+    private DaoGankEntity entityToDao(GankEntity.ResultsBean entity) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        if (daoGankEntity == null){
+            daoGankEntity = new DaoGankEntity();
+        }
+        daoGankEntity._id = entity._id;
+        daoGankEntity.createdAt = entity.createdAt;
+        daoGankEntity.desc = entity.desc;
+        daoGankEntity.publishedAt = entity.publishedAt;
+        daoGankEntity.source = entity.source;
+        daoGankEntity.type = entity.type;
+        daoGankEntity.url = entity.url;
+        daoGankEntity.used = entity.used;
+        daoGankEntity.who = entity.who;
+        daoGankEntity.addtime =str;
+        return daoGankEntity;
     }
 }

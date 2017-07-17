@@ -1,11 +1,9 @@
 package com.zhy.ganamrs.mvp.contract;
 
-import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
+import com.jess.arms.mvp.IView;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
-
-import org.greenrobot.greendao.rx.RxDao;
 
 import java.util.List;
 
@@ -24,6 +22,7 @@ public interface DetailContract {
     interface Model extends IModel {
         Observable<GankEntity> getRandomGirl();
         List<DaoGankEntity> queryById(String  id);
-        RxDao<DaoGankEntity, Void> addAndRemove(DaoGankEntity entity);
+        void removeByid(String id);
+        void addGankEntity(DaoGankEntity entity);
     }
 }

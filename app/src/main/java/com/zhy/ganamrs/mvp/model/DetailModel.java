@@ -13,8 +13,6 @@ import com.zhy.ganamrs.mvp.model.api.service.CommonService;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
 
-import org.greenrobot.greendao.rx.RxDao;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,12 +54,17 @@ public class DetailModel extends BaseModel implements DetailContract.Model {
                 .list();
     }
 
-
-
+    @Override
+    public void removeByid(String id) {
+        GreenDaoHelper.getDaoSession().getDaoGankEntityDao()
+                .queryBuilder()
+                .where(DaoGankEntityDao.Properties._id.eq(id))
+                .buildDelete().executeDeleteWithoutDetachingEntities();
+    }
 
     @Override
-    public RxDao<DaoGankEntity, Void> addAndRemove(DaoGankEntity entity) {
-        return GreenDaoHelper.getDaoSession().getDaoGankEntityDao().rx();
+    public void addGankEntity(DaoGankEntity entity) {
+        GreenDaoHelper.getDaoSession().getDaoGankEntityDao().insert(entity);
     }
 
 
