@@ -64,10 +64,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mReplace = 2;
                 break;
         }
-//        IFragment fragment = (IFragment) mFragments.get(mReplace);
         mToolbarTitle.setText(mTitles.get(mReplace));
         FragmentUtils.hideAllShowFragment(mFragments.get(mReplace));
-//        fragment.setData(null);
     };
 
     @Override

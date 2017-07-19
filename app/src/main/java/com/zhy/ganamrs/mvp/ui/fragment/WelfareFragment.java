@@ -1,7 +1,5 @@
 package com.zhy.ganamrs.mvp.ui.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -104,29 +102,13 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
     private void animatePhotoLike(View view) {
-//        View vBgLike = view.findViewById(R.id.vBgLike);
         View ivLike = view.findViewById(R.id.ivLike);
-//        vBgLike.setVisibility(View.VISIBLE);
         ivLike.setVisibility(View.VISIBLE);
 
-//        vBgLike.setScaleY(0.1f);
-//        vBgLike.setScaleX(0.1f);
-//        vBgLike.setAlpha(1f);
         ivLike.setScaleY(0.1f);
         ivLike.setScaleX(0.1f);
 
         AnimatorSet animatorSet = new AnimatorSet();
-
-//        ObjectAnimator bgScaleYAnim = ObjectAnimator.ofFloat(vBgLike, "scaleY", 0.1f, 1f);
-//        bgScaleYAnim.setDuration(200);
-//        bgScaleYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-//        ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(vBgLike, "scaleX", 0.1f, 1f);
-//        bgScaleXAnim.setDuration(200);
-//        bgScaleXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-//        ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(vBgLike, "alpha", 1f, 0f);
-//        bgAlphaAnim.setDuration(200);
-//        bgAlphaAnim.setStartDelay(150);
-//        bgAlphaAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
 
         ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(ivLike, "scaleY", 0.1f, 1f);
         imgScaleUpYAnim.setDuration(300);
@@ -142,18 +124,9 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         imgScaleDownXAnim.setDuration(300);
         imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
 
-//        animatorSet.playTogether(bgScaleYAnim, bgScaleXAnim, bgAlphaAnim, imgScaleUpYAnim, imgScaleUpXAnim);
         animatorSet.playTogether(imgScaleUpYAnim, imgScaleUpXAnim);
         animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
 
-        animatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-//                likeAnimationsMap.remove(holder);
-//                resetLikeAnimationState(holder);
-//                dispatchChangeFinishedIfAllAnimationsEnded(holder);
-            }
-        });
         animatorSet.start();
     }
 
