@@ -3,9 +3,6 @@ package com.zhy.ganamrs.mvp.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,60 +10,43 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
+
+import com.zhy.ganamrs.di.component.DaggerMeiziComponent;
+import com.zhy.ganamrs.di.module.MeiziModule;
+import com.zhy.ganamrs.mvp.contract.MeiziContract;
+import com.zhy.ganamrs.mvp.presenter.MeiziPresenter;
+
 import com.zhy.ganamrs.R;
-import com.zhy.ganamrs.di.component.DaggerCollectComponent;
-import com.zhy.ganamrs.di.module.CollectModule;
-import com.zhy.ganamrs.mvp.contract.CollectContract;
-import com.zhy.ganamrs.mvp.presenter.CollectPresenter;
-import com.zhy.ganamrs.mvp.ui.adapter.CollectViewPagerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class CollectFragment extends BaseFragment<CollectPresenter> implements CollectContract.View {
+public class MeiziFragment extends BaseFragment<MeiziPresenter> implements MeiziContract.View {
 
 
-    @BindView(R.id.tabs)
-    TabLayout tabs;
-    @BindView(R.id.mainPager)
-    ViewPager mainPager;
-    private List<Fragment> mFragments;
-
-    public static CollectFragment newInstance() {
-        CollectFragment fragment = new CollectFragment();
+    public static MeiziFragment newInstance() {
+        MeiziFragment fragment = new MeiziFragment();
         return fragment;
     }
 
     @Override
     public void setupFragmentComponent(AppComponent appComponent) {
-        DaggerCollectComponent //如找不到该类,请编译一下项目
+        DaggerMeiziComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
-                .collectModule(new CollectModule(this))
+                .meiziModule(new MeiziModule(this))
                 .build()
                 .inject(this);
     }
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_collect, container, false);
+        return inflater.inflate(R.layout.layout_refresh_list, container, false);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        if (mFragments == null) {
-            mFragments = new ArrayList<>();
-            mFragments.add(ArticleFragment.newInstance());
-            mFragments.add(MeiziFragment.newInstance());
-        }
-        mainPager.setOffscreenPageLimit(mFragments.size());
-        mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(),mFragments));
-        tabs.setupWithViewPager(mainPager);
+
     }
 
     /**
@@ -114,10 +94,4 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mainPager = null;
-        tabs = null;
-    }
 }
