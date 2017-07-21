@@ -4,12 +4,11 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,10 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import me.yuqirong.cardswipelayout.CardConfig;
+import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
+import me.yuqirong.cardswipelayout.CardLayoutManager;
+import me.yuqirong.cardswipelayout.OnSwipeListener;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 import static com.zhy.ganamrs.R.id.recyclerView;
@@ -73,25 +76,27 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     @Override
     public void initData(Bundle savedInstanceState) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+//        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
 
         mAdapter = new WelfareAdapter(null);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-            if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-                collectWelfare(adapter,view,position);
-            }
-        });
+
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+//        mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
+//        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+//            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+//            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+//            if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+//                collectWelfare(adapter,view,position);
+//            }
+//        });
         TextView textView = new TextView(getContext());
         textView.setText("没有更多内容了");
         textView.setGravity(Gravity.CENTER);
-        mAdapter.setEmptyView(textView);
+//        mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void collectWelfare(BaseQuickAdapter adapter, View view, int position) {
@@ -99,6 +104,12 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         GankEntity.ResultsBean entity = (GankEntity.ResultsBean) adapter.getItem(position);
         mPresenter.addToFavorites(entity);
     }
+
+    private void collectWelfare(Object o) {
+        GankEntity.ResultsBean entity = (GankEntity.ResultsBean)o;
+        mPresenter.addToFavorites(entity);
+    }
+
     private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
     private void animatePhotoLike(View view) {
@@ -201,7 +212,35 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     @Override
     public void setNewData(List<GankEntity.ResultsBean> mData) {
+        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(mRecyclerView.getAdapter(), mData);
+        cardCallback.setOnSwipedListener(new OnSwipeListener() {
+            @Override
+            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
+
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, Object o, int direction) {
+                mPresenter.requestData(false);
+                if(direction == CardConfig.SWIPED_RIGHT){
+                    collectWelfare(o);
+                }
+            }
+
+            @Override
+            public void onSwipedClear() {
+
+            }
+        });
+        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
+        final CardLayoutManager cardLayoutManager = new CardLayoutManager(mRecyclerView, touchHelper);
+        mRecyclerView.setLayoutManager(cardLayoutManager);
+        touchHelper.attachToRecyclerView(mRecyclerView);
+
         mAdapter.setNewData(mData);
+        if (mAdapter.getData().size() < 2){
+            mPresenter.requestData(false);
+        }
     }
 
     @Override

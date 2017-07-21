@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CollectViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
-    String[] title = {"文章","妹子"};
+    String[] title = {"妹子","文章"};
     public CollectViewPagerAdapter(FragmentManager fm, List<Fragment> mFragments) {
         super(fm);
         this.mFragments = mFragments;

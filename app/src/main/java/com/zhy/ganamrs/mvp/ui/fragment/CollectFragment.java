@@ -61,8 +61,8 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     public void initData(Bundle savedInstanceState) {
         if (mFragments == null) {
             mFragments = new ArrayList<>();
-            mFragments.add(ArticleFragment.newInstance());
             mFragments.add(MeiziFragment.newInstance());
+            mFragments.add(ArticleFragment.newInstance());
         }
         mainPager.setOffscreenPageLimit(mFragments.size());
         mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(),mFragments));
