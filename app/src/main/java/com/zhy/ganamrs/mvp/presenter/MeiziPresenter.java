@@ -40,4 +40,8 @@ public class MeiziPresenter extends BasePresenter<MeiziContract.Model, MeiziCont
         this.mApplication = null;
     }
 
+    public void requestData(boolean b) {
+        mRootView.setAdapter(mModel.getEntity());
+        mRootView.endLoadMore();
+    }
 }
