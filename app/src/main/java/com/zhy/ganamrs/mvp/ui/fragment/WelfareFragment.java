@@ -79,9 +79,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 //        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
-
         mAdapter = new WelfareAdapter(null);
-
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
 //        mAdapter.setOnLoadMoreListener(()->mPresenter.requestData(false), mRecyclerView);
 //        mAdapter.setOnItemClickListener((adapter, view, position) -> {
