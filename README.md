@@ -3,8 +3,10 @@
 
 ## 演示
 
- ![image](https://github.com/lianhuo/Ganamrs/blob/master/image/image1.png)
- ![image](https://github.com/lianhuo/Ganamrs/blob/master/image/image2.png)
- ![image](https://github.com/lianhuo/Ganamrs/blob/master/image/image3.png)
- ![image](https://github.com/lianhuo/Ganamrs/blob/master/image/image4.png)
- ![image](https://github.com/lianhuo/Ganamrs/blob/master/image/image5.png)
+<p>
+ <img src="/image/image1.png" width="180"/>
+ <img src="/image/image2.png" width="180"/>
+ <img src="/image/image3.png" width="180"/>
+ <img src="/image/image4.png" width="180"/>
+ <img src="/image/image5.png" width="180"/>
+</p>
