@@ -9,16 +9,16 @@ ext {
                versionName             : "1.0"
     ]
 
-     version = [
-                   androidSupportSdkVersion: "25.3.1",
-                   retrofitSdkVersion      : "2.3.0",
-                   dagger2SdkVersion       : "2.10",
-                   butterknifeSdkVersion   : "8.6.0",
-                   rxlifecycleSdkVersion   : "1.0",
-                   rxlifecycle2SdkVersion   : "2.0.1",
-                   espressoSdkVersion      : "2.2.2",
-                   canarySdkVersion        : "1.5.1"
-        ]
+    version = [
+            androidSupportSdkVersion: "25.4.0",
+            retrofitSdkVersion      : "2.3.0",
+            dagger2SdkVersion       : "2.11",
+            butterknifeSdkVersion   : "8.7.0",
+            rxlifecycleSdkVersion   : "1.0",
+            rxlifecycle2SdkVersion   : "2.1.0",
+            espressoSdkVersion      : "2.2.2",
+            canarySdkVersion        : "1.5.1"
+    ]
 
     dependencies = [
                 //support

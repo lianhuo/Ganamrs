@@ -45,7 +45,6 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
         this.mApplication = application;
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
-
 //        mAdapter = new CategoryAdapter(mData);
 //        mRootView.setAdapter(mAdapter);//设置Adapter
     }

@@ -14,17 +14,14 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jess.arms.base.App;
-import com.jess.arms.base.delegate.AppDelegate;
+import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ConfigModule;
-import com.jess.arms.integration.IRepositoryManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.zhy.ganamrs.BuildConfig;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.mvp.model.api.Api;
-import com.zhy.ganamrs.mvp.model.api.cache.CommonCache;
-import com.zhy.ganamrs.mvp.model.api.service.CommonService;
 
 import java.util.List;
 
@@ -46,17 +43,15 @@ public class GlobalConfiguration implements ConfigModule {
     }
 
     @Override
-    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        //使用repositoryManager可以注入一些服务
-        repositoryManager.injectRetrofitService(CommonService.class);//Retrofit需要的Service
-        repositoryManager.injectCacheService(CommonCache.class);//RxCache需要的Service
-    }
-
-    @Override
-    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+    public void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles) {
         //AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
-        lifecycles.add(new AppDelegate.Lifecycle() {
+        lifecycles.add(new AppLifecycles() {
 
+
+            @Override
+            public void attachBaseContext(Context base) {
+
+            }
 
             @Override
             public void onCreate(Application application) {
@@ -81,6 +76,7 @@ public class GlobalConfiguration implements ConfigModule {
             }
         });
     }
+
 
     @Override
     public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles) {
