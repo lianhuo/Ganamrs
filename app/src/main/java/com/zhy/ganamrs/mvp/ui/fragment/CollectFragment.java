@@ -68,7 +68,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
         mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(),mFragments));
         tabs.setupWithViewPager(mainPager);
     }
-
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
      * 建议在有多个需要让外界调用的方法时,统一传Message,通过what字段,来区分不同的方法,在setData

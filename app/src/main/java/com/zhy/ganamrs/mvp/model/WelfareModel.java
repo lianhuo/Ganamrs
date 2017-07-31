@@ -1,6 +1,7 @@
 package com.zhy.ganamrs.mvp.model;
 
 import android.app.Application;
+import android.os.Message;
 
 import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
@@ -47,16 +48,22 @@ public class WelfareModel extends BaseModel implements WelfareContract.Model {
     }
 
     @Override
-    public String addGankEntity(DaoGankEntity daoGankEntity) {
+    public Message addGankEntity(DaoGankEntity daoGankEntity) {
+        Message message = new Message();
         List<DaoGankEntity> list = GreenDaoHelper.getDaoSession().getDaoGankEntityDao()
                 .queryBuilder()
                 .where(DaoGankEntityDao.Properties._id.eq(daoGankEntity._id))
                 .list();
         if (list.size() > 0){
-            return "该图片已经收藏过了";
+            message.what =  101;
         }else {
-            GreenDaoHelper.getDaoSession().getDaoGankEntityDao().insert(daoGankEntity);
-            return "收藏成功";
+            long insert = GreenDaoHelper.getDaoSession().getDaoGankEntityDao().insert(daoGankEntity);
+            if (insert > 0){
+                message.what =  102;
+            }else {
+                message.what =  103;
+            }
         }
+        return message;
     }
 }

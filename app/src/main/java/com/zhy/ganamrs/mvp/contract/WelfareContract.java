@@ -1,5 +1,7 @@
 package com.zhy.ganamrs.mvp.contract;
 
+import android.os.Message;
+
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
@@ -25,6 +27,6 @@ public interface WelfareContract {
     interface Model extends IModel {
         Observable<GankEntity> getRandomGirl();
 
-        String addGankEntity(DaoGankEntity daoGankEntity);
+        Message addGankEntity(DaoGankEntity daoGankEntity);
     }
 }

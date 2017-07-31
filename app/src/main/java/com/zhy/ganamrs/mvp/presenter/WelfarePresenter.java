@@ -1,6 +1,7 @@
 package com.zhy.ganamrs.mvp.presenter;
 
 import android.app.Application;
+import android.os.Message;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
@@ -10,6 +11,8 @@ import com.zhy.ganamrs.app.utils.RxUtils;
 import com.zhy.ganamrs.mvp.contract.WelfareContract;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;
 import com.zhy.ganamrs.mvp.model.entity.GankEntity;
+
+import org.simple.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,7 +87,21 @@ public class WelfarePresenter extends BasePresenter<WelfareContract.Model, Welfa
 
     public void addToFavorites(GankEntity.ResultsBean entity) {
         DaoGankEntity daoGankEntity = entityToDao(entity);
-        mRootView.showMessage(mModel.addGankEntity(daoGankEntity));
+        Message message = mModel.addGankEntity(daoGankEntity);
+        String a = null;
+        switch (message.what){
+            case 101:
+                a = "该图片已经收藏过了";
+                break;
+            case 102:
+                a = "收藏成功";
+                EventBus.getDefault().post(new Object(),"meizi");
+                break;
+            case 103:
+                a = "收藏失败";
+                break;
+        }
+        mRootView.showMessage(a);
     }
     private DaoGankEntity entityToDao(GankEntity.ResultsBean entity) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
