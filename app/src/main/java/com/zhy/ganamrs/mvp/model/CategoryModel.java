@@ -36,8 +36,7 @@ public class CategoryModel extends BaseModel implements CategoryContract.Model {
 
     @Override
     public Observable<GankEntity> gank(String type, String page) {
-        Observable<GankEntity> gank = mRepositoryManager.obtainRetrofitService(CommonService.class)
+        return mRepositoryManager.obtainRetrofitService(CommonService.class)
                 .gank(type, USERS_PER_PAGESIZE, page);
-        return gank;
     }
 }
