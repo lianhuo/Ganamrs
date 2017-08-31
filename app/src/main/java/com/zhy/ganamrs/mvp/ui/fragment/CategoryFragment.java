@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.app.base.BaseFragment;
@@ -70,7 +70,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     public void initData(Bundle savedInstanceState) {
         type = getArguments().getString("type");
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+        ArmsUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
     }
     @Override
     protected void onFragmentFirstVisible() {
@@ -111,13 +111,13 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override

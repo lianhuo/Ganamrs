@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerArticleComponent;
@@ -70,7 +70,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     @Override
     public void initData(Bundle savedInstanceState) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+        ArmsUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
 
         mAdapter = new ArticleAdapter(null);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
@@ -154,13 +154,13 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override

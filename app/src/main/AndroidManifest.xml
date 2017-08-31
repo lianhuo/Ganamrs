@@ -25,11 +25,6 @@
             </intent-filter>
         </activity>
 
-        <!-- glide配置 -->
-        <meta-data
-            android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
-            android:value="GlideModule" />
-        <!-- arms配置 -->
         <meta-data
             android:name="com.zhy.ganamrs.app.GlobalConfiguration"
             android:value="ConfigModule" />

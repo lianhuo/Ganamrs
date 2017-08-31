@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerMeiziComponent;
@@ -70,7 +70,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     @Override
     public void initData(Bundle savedInstanceState) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView,new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        ArmsUtils.configRecycleView(mRecyclerView,new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new MeiziAdapter(null);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -147,13 +147,13 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override

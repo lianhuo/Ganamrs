@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.app.base.BaseFragment;
 import com.zhy.ganamrs.di.component.DaggerWelfareComponent;
@@ -76,7 +76,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     @Override
     public void initData(Bundle savedInstanceState) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-//        UiUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+//        ArmsUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
         mAdapter = new WelfareAdapter(null);
@@ -179,13 +179,13 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override

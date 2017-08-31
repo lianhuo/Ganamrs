@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.di.component.DaggerCollectComponent;
 import com.zhy.ganamrs.di.module.CollectModule;
@@ -99,13 +99,13 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override

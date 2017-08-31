@@ -23,7 +23,7 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }//这里要使用rxcahche指定的仓库
         maven {
-            url 'https://maven.google.com'
+            url 'https://dl.google.com/dl/android/maven2/'
             // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
         }
     }

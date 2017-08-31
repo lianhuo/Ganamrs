@@ -4,9 +4,9 @@ import android.app.Application;
 import android.os.Message;
 
 import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.widget.imageloader.ImageLoader;
 import com.zhy.ganamrs.app.utils.RxUtils;
 import com.zhy.ganamrs.mvp.contract.WelfareContract;
 import com.zhy.ganamrs.mvp.model.entity.DaoGankEntity;

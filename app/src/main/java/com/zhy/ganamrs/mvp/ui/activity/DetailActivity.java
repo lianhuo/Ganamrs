@@ -16,11 +16,10 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.jess.arms.base.App;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
-import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
+import com.jess.arms.utils.ArmsUtils;
 import com.zhy.ganamrs.R;
 import com.zhy.ganamrs.di.component.DaggerDetailComponent;
 import com.zhy.ganamrs.di.module.DetailModule;
@@ -86,10 +85,10 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
         // TODO: 2017/7/13 添加到收藏夹
         fab.setOnClickListener(v -> {
             if (isFavorite) {
-                UiUtils.makeText(this,"已移除收藏夹");
+                ArmsUtils.makeText(this,"已移除收藏夹");
                 mPresenter.removeByid(entity);
             } else {
-                UiUtils.makeText(this,"已添加到收藏夹");
+                ArmsUtils.makeText(this,"已添加到收藏夹");
                 mPresenter.addToFavorites(entity);
             }
         });
@@ -150,13 +149,13 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
@@ -175,8 +174,8 @@ public class DetailActivity extends BaseActivity<DetailPresenter> implements Det
 
     @Override
     public void setData(String url) {
-        ((App)getApplicationContext()).getAppComponent().imageLoader().loadImage(this,
-                GlideImageConfig
+        ArmsUtils.obtainAppComponentFromContext(this).imageLoader().loadImage(this,
+                ImageConfigImpl
                         .builder()
                         .url(url)
                         .imageView(imageView)
